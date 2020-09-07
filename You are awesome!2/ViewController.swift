@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        messageLabel.text = " "
        print("👍viewDidLoad has run")
     }
 
