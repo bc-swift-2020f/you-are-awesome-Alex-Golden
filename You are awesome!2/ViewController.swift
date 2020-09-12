@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
@@ -14,44 +15,57 @@ class ViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
     var imageNumber = 0
+    var messageNumber = 0
+    let totalNumberOfImages = 9
+    var audioPlayer: AVAudioPlayer!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         messageLabel.text = " "
-       print("👍viewDidLoad has run")
     }
 
 
     @IBAction func messageButtonPressed(_ sender: UIButton) {
        
-        print(imageNumber)
-      //  let imageName = "image" + String(imageNumber)
-        let imageName = "image/(imageNumber)"
-        imageView.image = UIImage(named: imageName)
-        imageNumber = imageNumber + 1
-        if imageNumber == 10 {
-            imageNumber = 0
+  let messages = ["You are awesome!",
+                  "You are great",
+                  "You are fantastic",
+                  "When the genius bar needs help, they call you",
+                  "Fabulous? thats you",
+                  "You've got the design skills of Jony Ive"]
+       
+        var newMessage = messages[Int.random(in: 0...messages.count-1)]
+        
+        while messageLabel.text == newMessage {
+            newMessage = messages[Int.random(in: 0...messages.count-1)]
         }
         
-      
+        messageLabel.text = newMessage
         
-//
-//    let awesomeMessage = "You are awesome!"
-//        let greatMessage = "You are great!"
-//        let bombMessage = "You are da bomb!"
-//
-//        if messageLabel.text == awesomeMessage {
-//            messageLabel.text = greatMessage
-//            imageView.image = UIImage(named: "image1")
-//
-//            else if messageLabel.text == greatMessage{
-//                messageLabel.text = bombMessage
-//                imageView.image = UIImage(named: "image2")
-//            }
-//        } else {messageLabel.text = awesomeMessage
-//            imageView.image = UIImage(named: "image0") }
+        
+        var newImage = UIImage(named: "image\(Int.random(in: 0...totalNumberOfImages))")
+        
+        while imageView.image == newImage {
+            newImage = UIImage(named: "image\(Int.random(in: 0...totalNumberOfImages))")
+        }
+        imageView.image = newImage
+        
+        if let sound = NSDataAsset(name: "sound0") {
+            do{
+                try audioPlayer = AVAudioPlayer(data: sound.data)
+                audioPlayer.play()
+            }catch{
+            print( "error: \(error.localizedDescription) could not initialize av AVAudioPlayer object")
+            }
+        } else {
+            print("could not read sound file")}
+        }
+        
+        
+        
     }
     
-}
 
+
+  
