@@ -14,17 +14,29 @@ class ViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
-    var imageNumber = 0
-    var messageNumber = 0
+    var imageNumber = -1
+    var messageNumber = -1
     let totalNumberOfImages = 9
     var audioPlayer: AVAudioPlayer!
+    let totalNumberOfSounds = 6
+    var soundNumber = -1
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         messageLabel.text = " "
     }
-
+    func playSound () { if let sound = NSDataAsset(name: "sound0") {
+                   do{
+                       try audioPlayer = AVAudioPlayer(data: sound.data)
+                       audioPlayer.play()
+                   }catch{
+                   print( "error: \(error.localizedDescription) could not initialize av AVAudioPlayer object")
+                   }
+               } else {
+                   print("could not read sound file")}
+        
+    }
 
     @IBAction func messageButtonPressed(_ sender: UIButton) {
        
@@ -44,28 +56,26 @@ class ViewController: UIViewController {
         messageLabel.text = newMessage
         
         
-        var newImage = UIImage(named: "image\(Int.random(in: 0...totalNumberOfImages))")
-        
-        while imageView.image == newImage {
-            newImage = UIImage(named: "image\(Int.random(in: 0...totalNumberOfImages))")
-        }
-        imageView.image = newImage
-        
-        if let sound = NSDataAsset(name: "sound0") {
-            do{
-                try audioPlayer = AVAudioPlayer(data: sound.data)
-                audioPlayer.play()
-            }catch{
-            print( "error: \(error.localizedDescription) could not initialize av AVAudioPlayer object")
-            }
-        } else {
-            print("could not read sound file")}
+        var newImageNumber: Int
+        repeat {
+            newImageNumber = Int.random(in: 0...totalNumberOfImages-1)
+        } while imageNumber == newImageNumber
+            imageNumber = newImageNumber
+        imageView.image = UIImage(named: "image\(imageNumber)")
         }
         
-        
-        
-    }
+    var newSoundNumber: Int = 0
+             repeat {
+                 newSoundNumber = Int.random(in: 0...totalNumberOfSounds-1)
+             } while soundNumber == newSoundNumber
+                 soundNumber = newSoundNumber
+             print("the new sound number is \(soundNumber)")
+             
+//newSoundNumber not declared?
     
-
-
-  
+        playSound()
+        
+        
+    
+      
+}
