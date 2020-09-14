@@ -13,7 +13,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
-    
+
     var imageNumber = -1
     var messageNumber = -1
     let totalNumberOfImages = 9
@@ -65,8 +65,8 @@ class ViewController: UIViewController {
         }
         
     var newSoundNumber: Int = 0
-             repeat {
-                 newSoundNumber = Int.random(in: 0...totalNumberOfSounds-1)
+             repeat
+    { newSoundNumber = Int.random(in: 0...totalNumberOfSounds-1)
              } while soundNumber == newSoundNumber
                  soundNumber = newSoundNumber
              print("the new sound number is \(soundNumber)")
@@ -75,7 +75,15 @@ class ViewController: UIViewController {
     
         playSound()
         
-        
+    @IBAction func playSoundToggled(_ sender: UISwitch) {
+    if !sender.isOn && audioPlayer != nil {
+        audioPlayer.stop()
+    }
     
-      
+    
+   
+    
 }
+
+}
+
